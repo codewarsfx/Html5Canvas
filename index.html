@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas width="800px" height="800px"></canvas>
+    <script>
+      let canvas = document.querySelector('canvas');
+      let ctx = canvas.getContext('2d');
+      ctx.lineWidth = 3;
+      ctx.fillStyle = 'gold';
+      ctx.strokeStyle = 'black';
+      let drawCircle = (x, y, r, bool) => {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+        bool ? ctx.fill() : ctx.stroke();
+      };
+      let x = 400;
+      let y = 400;
+      let drawBee = (x, y) => {
+        drawCircle(x, y, 20, true);
+        drawCircle(x - 5, y, 5, false);
+        drawCircle(x + 5, y, 5, false);
+        drawCircle(x - 10, y - 30, 10, false);
+        drawCircle(x + 10, y - 30, 10, false);
+      };
+      let updateFunction = () => {
+        let update = Math.random() * 4 - 2;
+        if (x > 800 || x < 0) {
+          update = -update;
+        }
+        if (y > 800 || y < 0) {
+          update = -update;
+        }
+        x = x + update;
+        y = y + update;
+      };
+      setInterval(function () {
+        ctx.clearRect(0, 0, 800, 800);
+        updateFunction();
+        drawBee(x, y);
+        ctx.strokeRect(0, 0, 800, 800);
+      });
+    </script>
+  </body>
+</html>
